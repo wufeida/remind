@@ -2,6 +2,7 @@ package com.wufeida.remind.dao;
 
 import com.wufeida.remind.model.Remind;
 import com.wufeida.remind.model.RemindCriteria;
+import com.wufeida.remind.model.RemindWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -33,17 +34,21 @@ public interface RemindMapper {
     @Insert({
         "insert into remind (remind_time, create_at, ",
         "update_at, user_id, ",
-        "content)",
+        "status, type, title, ",
+        "mobile, content, ",
+        "pic_url)",
         "values (#{remindTime,jdbcType=TIMESTAMP}, #{createAt,jdbcType=TIMESTAMP}, ",
         "#{updateAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, ",
-        "#{content,jdbcType=LONGVARCHAR})"
+        "#{status,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{title,jdbcType=VARCHAR}, ",
+        "#{mobile,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, ",
+        "#{picUrl,jdbcType=LONGVARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
-    int insert(Remind record);
+    int insert(RemindWithBLOBs record);
 
     @InsertProvider(type=RemindSqlProvider.class, method="insertSelective")
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
-    int insertSelective(Remind record);
+    int insertSelective(RemindWithBLOBs record);
 
     @SelectProvider(type=RemindSqlProvider.class, method="selectByExampleWithBLOBs")
     @Results({
@@ -52,9 +57,14 @@ public interface RemindMapper {
         @Result(column="create_at", property="createAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_at", property="updateAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR)
+        @Result(column="status", property="status", jdbcType=JdbcType.TINYINT),
+        @Result(column="type", property="type", jdbcType=JdbcType.TINYINT),
+        @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
+        @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
+        @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR),
+        @Result(column="pic_url", property="picUrl", jdbcType=JdbcType.LONGVARCHAR)
     })
-    List<Remind> selectByExampleWithBLOBs(RemindCriteria example);
+    List<RemindWithBLOBs> selectByExampleWithBLOBs(RemindCriteria example);
 
     @SelectProvider(type=RemindSqlProvider.class, method="selectByExample")
     @Results({
@@ -62,13 +72,18 @@ public interface RemindMapper {
         @Result(column="remind_time", property="remindTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="create_at", property="createAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_at", property="updateAt", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER)
+        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
+        @Result(column="status", property="status", jdbcType=JdbcType.TINYINT),
+        @Result(column="type", property="type", jdbcType=JdbcType.TINYINT),
+        @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
+        @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR)
     })
     List<Remind> selectByExample(RemindCriteria example);
 
     @Select({
         "select",
-        "id, remind_time, create_at, update_at, user_id, content",
+        "id, remind_time, create_at, update_at, user_id, status, type, title, mobile, ",
+        "content, pic_url",
         "from remind",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -78,21 +93,26 @@ public interface RemindMapper {
         @Result(column="create_at", property="createAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_at", property="updateAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR)
+        @Result(column="status", property="status", jdbcType=JdbcType.TINYINT),
+        @Result(column="type", property="type", jdbcType=JdbcType.TINYINT),
+        @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
+        @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
+        @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR),
+        @Result(column="pic_url", property="picUrl", jdbcType=JdbcType.LONGVARCHAR)
     })
-    Remind selectByPrimaryKey(Integer id);
+    RemindWithBLOBs selectByPrimaryKey(Integer id);
 
     @UpdateProvider(type=RemindSqlProvider.class, method="updateByExampleSelective")
-    int updateByExampleSelective(@Param("record") Remind record, @Param("example") RemindCriteria example);
+    int updateByExampleSelective(@Param("record") RemindWithBLOBs record, @Param("example") RemindCriteria example);
 
     @UpdateProvider(type=RemindSqlProvider.class, method="updateByExampleWithBLOBs")
-    int updateByExampleWithBLOBs(@Param("record") Remind record, @Param("example") RemindCriteria example);
+    int updateByExampleWithBLOBs(@Param("record") RemindWithBLOBs record, @Param("example") RemindCriteria example);
 
     @UpdateProvider(type=RemindSqlProvider.class, method="updateByExample")
     int updateByExample(@Param("record") Remind record, @Param("example") RemindCriteria example);
 
     @UpdateProvider(type=RemindSqlProvider.class, method="updateByPrimaryKeySelective")
-    int updateByPrimaryKeySelective(Remind record);
+    int updateByPrimaryKeySelective(RemindWithBLOBs record);
 
     @Update({
         "update remind",
@@ -100,17 +120,26 @@ public interface RemindMapper {
           "create_at = #{createAt,jdbcType=TIMESTAMP},",
           "update_at = #{updateAt,jdbcType=TIMESTAMP},",
           "user_id = #{userId,jdbcType=INTEGER},",
-          "content = #{content,jdbcType=LONGVARCHAR}",
+          "status = #{status,jdbcType=TINYINT},",
+          "type = #{type,jdbcType=TINYINT},",
+          "title = #{title,jdbcType=VARCHAR},",
+          "mobile = #{mobile,jdbcType=VARCHAR},",
+          "content = #{content,jdbcType=LONGVARCHAR},",
+          "pic_url = #{picUrl,jdbcType=LONGVARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKeyWithBLOBs(Remind record);
+    int updateByPrimaryKeyWithBLOBs(RemindWithBLOBs record);
 
     @Update({
         "update remind",
         "set remind_time = #{remindTime,jdbcType=TIMESTAMP},",
           "create_at = #{createAt,jdbcType=TIMESTAMP},",
           "update_at = #{updateAt,jdbcType=TIMESTAMP},",
-          "user_id = #{userId,jdbcType=INTEGER}",
+          "user_id = #{userId,jdbcType=INTEGER},",
+          "status = #{status,jdbcType=TINYINT},",
+          "type = #{type,jdbcType=TINYINT},",
+          "title = #{title,jdbcType=VARCHAR},",
+          "mobile = #{mobile,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Remind record);

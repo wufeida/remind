@@ -1,9 +1,9 @@
 package com.wufeida.remind.dao;
 
-import com.wufeida.remind.model.Remind;
 import com.wufeida.remind.model.RemindCriteria.Criteria;
 import com.wufeida.remind.model.RemindCriteria.Criterion;
 import com.wufeida.remind.model.RemindCriteria;
+import com.wufeida.remind.model.RemindWithBLOBs;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
@@ -24,7 +24,7 @@ public class RemindSqlProvider {
         return sql.toString();
     }
 
-    public String insertSelective(Remind record) {
+    public String insertSelective(RemindWithBLOBs record) {
         SQL sql = new SQL();
         sql.INSERT_INTO("remind");
         
@@ -44,8 +44,28 @@ public class RemindSqlProvider {
             sql.VALUES("user_id", "#{userId,jdbcType=INTEGER}");
         }
         
+        if (record.getStatus() != null) {
+            sql.VALUES("status", "#{status,jdbcType=TINYINT}");
+        }
+        
+        if (record.getType() != null) {
+            sql.VALUES("type", "#{type,jdbcType=TINYINT}");
+        }
+        
+        if (record.getTitle() != null) {
+            sql.VALUES("title", "#{title,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getMobile() != null) {
+            sql.VALUES("mobile", "#{mobile,jdbcType=VARCHAR}");
+        }
+        
         if (record.getContent() != null) {
             sql.VALUES("content", "#{content,jdbcType=LONGVARCHAR}");
+        }
+        
+        if (record.getPicUrl() != null) {
+            sql.VALUES("pic_url", "#{picUrl,jdbcType=LONGVARCHAR}");
         }
         
         return sql.toString();
@@ -62,7 +82,12 @@ public class RemindSqlProvider {
         sql.SELECT("create_at");
         sql.SELECT("update_at");
         sql.SELECT("user_id");
+        sql.SELECT("status");
+        sql.SELECT("type");
+        sql.SELECT("title");
+        sql.SELECT("mobile");
         sql.SELECT("content");
+        sql.SELECT("pic_url");
         sql.FROM("remind");
         applyWhere(sql, example, false);
         
@@ -84,6 +109,10 @@ public class RemindSqlProvider {
         sql.SELECT("create_at");
         sql.SELECT("update_at");
         sql.SELECT("user_id");
+        sql.SELECT("status");
+        sql.SELECT("type");
+        sql.SELECT("title");
+        sql.SELECT("mobile");
         sql.FROM("remind");
         applyWhere(sql, example, false);
         
@@ -95,7 +124,7 @@ public class RemindSqlProvider {
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        Remind record = (Remind) parameter.get("record");
+        RemindWithBLOBs record = (RemindWithBLOBs) parameter.get("record");
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         
         SQL sql = new SQL();
@@ -121,8 +150,28 @@ public class RemindSqlProvider {
             sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
         }
         
+        if (record.getStatus() != null) {
+            sql.SET("status = #{record.status,jdbcType=TINYINT}");
+        }
+        
+        if (record.getType() != null) {
+            sql.SET("type = #{record.type,jdbcType=TINYINT}");
+        }
+        
+        if (record.getTitle() != null) {
+            sql.SET("title = #{record.title,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getMobile() != null) {
+            sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
+        }
+        
         if (record.getContent() != null) {
             sql.SET("content = #{record.content,jdbcType=LONGVARCHAR}");
+        }
+        
+        if (record.getPicUrl() != null) {
+            sql.SET("pic_url = #{record.picUrl,jdbcType=LONGVARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -138,7 +187,12 @@ public class RemindSqlProvider {
         sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
         sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
         sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+        sql.SET("status = #{record.status,jdbcType=TINYINT}");
+        sql.SET("type = #{record.type,jdbcType=TINYINT}");
+        sql.SET("title = #{record.title,jdbcType=VARCHAR}");
+        sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
         sql.SET("content = #{record.content,jdbcType=LONGVARCHAR}");
+        sql.SET("pic_url = #{record.picUrl,jdbcType=LONGVARCHAR}");
         
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         applyWhere(sql, example, true);
@@ -154,13 +208,17 @@ public class RemindSqlProvider {
         sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
         sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
         sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+        sql.SET("status = #{record.status,jdbcType=TINYINT}");
+        sql.SET("type = #{record.type,jdbcType=TINYINT}");
+        sql.SET("title = #{record.title,jdbcType=VARCHAR}");
+        sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
         
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(Remind record) {
+    public String updateByPrimaryKeySelective(RemindWithBLOBs record) {
         SQL sql = new SQL();
         sql.UPDATE("remind");
         
@@ -180,8 +238,28 @@ public class RemindSqlProvider {
             sql.SET("user_id = #{userId,jdbcType=INTEGER}");
         }
         
+        if (record.getStatus() != null) {
+            sql.SET("status = #{status,jdbcType=TINYINT}");
+        }
+        
+        if (record.getType() != null) {
+            sql.SET("type = #{type,jdbcType=TINYINT}");
+        }
+        
+        if (record.getTitle() != null) {
+            sql.SET("title = #{title,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getMobile() != null) {
+            sql.SET("mobile = #{mobile,jdbcType=VARCHAR}");
+        }
+        
         if (record.getContent() != null) {
             sql.SET("content = #{content,jdbcType=LONGVARCHAR}");
+        }
+        
+        if (record.getPicUrl() != null) {
+            sql.SET("pic_url = #{picUrl,jdbcType=LONGVARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");

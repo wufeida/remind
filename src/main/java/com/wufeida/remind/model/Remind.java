@@ -1,9 +1,8 @@
 package com.wufeida.remind.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Remind implements Serializable {
+public class Remind {
     private Integer id;
 
     private Date remindTime;
@@ -14,9 +13,13 @@ public class Remind implements Serializable {
 
     private Integer userId;
 
-    private String content;
+    private Integer status;
 
-    private static final long serialVersionUID = 1L;
+    private Integer type;
+
+    private String title;
+
+    private String mobile;
 
     public Integer getId() {
         return id;
@@ -58,61 +61,35 @@ public class Remind implements Serializable {
         this.userId = userId;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Remind other = (Remind) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getRemindTime() == null ? other.getRemindTime() == null : this.getRemindTime().equals(other.getRemindTime()))
-            && (this.getCreateAt() == null ? other.getCreateAt() == null : this.getCreateAt().equals(other.getCreateAt()))
-            && (this.getUpdateAt() == null ? other.getUpdateAt() == null : this.getUpdateAt().equals(other.getUpdateAt()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
+    public Integer getType() {
+        return type;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getRemindTime() == null) ? 0 : getRemindTime().hashCode());
-        result = prime * result + ((getCreateAt() == null) ? 0 : getCreateAt().hashCode());
-        result = prime * result + ((getUpdateAt() == null) ? 0 : getUpdateAt().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
-        return result;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", remindTime=").append(remindTime);
-        sb.append(", createAt=").append(createAt);
-        sb.append(", updateAt=").append(updateAt);
-        sb.append(", userId=").append(userId);
-        sb.append(", content=").append(content);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
