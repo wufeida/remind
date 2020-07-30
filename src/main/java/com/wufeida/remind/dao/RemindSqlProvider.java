@@ -60,6 +60,10 @@ public class RemindSqlProvider {
             sql.VALUES("mobile", "#{mobile,jdbcType=VARCHAR}");
         }
         
+        if (record.getIsAtAll() != null) {
+            sql.VALUES("is_at_all", "#{isAtAll,jdbcType=TINYINT}");
+        }
+        
         if (record.getContent() != null) {
             sql.VALUES("content", "#{content,jdbcType=LONGVARCHAR}");
         }
@@ -86,6 +90,7 @@ public class RemindSqlProvider {
         sql.SELECT("type");
         sql.SELECT("title");
         sql.SELECT("mobile");
+        sql.SELECT("is_at_all");
         sql.SELECT("content");
         sql.SELECT("pic_url");
         sql.FROM("remind");
@@ -113,6 +118,7 @@ public class RemindSqlProvider {
         sql.SELECT("type");
         sql.SELECT("title");
         sql.SELECT("mobile");
+        sql.SELECT("is_at_all");
         sql.FROM("remind");
         applyWhere(sql, example, false);
         
@@ -166,6 +172,10 @@ public class RemindSqlProvider {
             sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
         }
         
+        if (record.getIsAtAll() != null) {
+            sql.SET("is_at_all = #{record.isAtAll,jdbcType=TINYINT}");
+        }
+        
         if (record.getContent() != null) {
             sql.SET("content = #{record.content,jdbcType=LONGVARCHAR}");
         }
@@ -191,6 +201,7 @@ public class RemindSqlProvider {
         sql.SET("type = #{record.type,jdbcType=TINYINT}");
         sql.SET("title = #{record.title,jdbcType=VARCHAR}");
         sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
+        sql.SET("is_at_all = #{record.isAtAll,jdbcType=TINYINT}");
         sql.SET("content = #{record.content,jdbcType=LONGVARCHAR}");
         sql.SET("pic_url = #{record.picUrl,jdbcType=LONGVARCHAR}");
         
@@ -212,6 +223,7 @@ public class RemindSqlProvider {
         sql.SET("type = #{record.type,jdbcType=TINYINT}");
         sql.SET("title = #{record.title,jdbcType=VARCHAR}");
         sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
+        sql.SET("is_at_all = #{record.isAtAll,jdbcType=TINYINT}");
         
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         applyWhere(sql, example, true);
@@ -252,6 +264,10 @@ public class RemindSqlProvider {
         
         if (record.getMobile() != null) {
             sql.SET("mobile = #{mobile,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIsAtAll() != null) {
+            sql.SET("is_at_all = #{isAtAll,jdbcType=TINYINT}");
         }
         
         if (record.getContent() != null) {

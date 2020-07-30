@@ -1,8 +1,8 @@
 package com.wufeida.remind.service;
 
+import com.dingtalk.api.response.OapiRobotSendResponse;
 import com.taobao.api.ApiException;
 import com.wufeida.remind.dao.RemindMapper;
-import com.wufeida.remind.model.Remind;
 import com.wufeida.remind.model.RemindCriteria;
 import com.wufeida.remind.model.RemindWithBLOBs;
 import com.wufeida.remind.utils.DingTalk;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,23 +40,41 @@ public class RemindService {
         String now = sdf.format(new Date());
         List<String> mobileList = new ArrayList<>();
         unRemindList.forEach(n -> {
-                String text = "#### " + n.getTitle() + "\n" +
-            "> " + n.getContent() + "\n" +
-            "> ###### " + now + "提醒\n";
-
-            String[] mobiles = StringUtils.split(n.getMobile(), ",");
-            System.out.println(mobiles.length);
-            if (mobiles != null) {
-                mobileList.addAll(Arrays.asList(mobiles));
-                mobileList.forEach(System.out::println);
+            if (n.getMobile() != null && n.getMobile().contains(",")) {
+                String[] split = StringUtils.split(n.getMobile(), ",");
+                if (split != null) {
+                    mobileList.addAll(Arrays.asList(split));
+                }
+            } else if (n.getMobile() != null && !n.getMobile().contains(",")) {
+                mobileList.add(n.getMobile());
             }
-//            try {
-//                dingTalk.sendText(n.getContent(), mobileList, false);
-////                dingTalk.sendMarkdown(n.getTitle(), text, mobileList, false);
-//            } catch (ApiException e) {
-//                e.printStackTrace();
-//            }
+            String atMobileText = null;
+            if (n.getMobile() != null && n.getMobile().contains(",")) {
+                String[] split = StringUtils.split(n.getMobile(), ",");
+                if (split != null) {
+                    StringBuilder sb = new StringBuilder();
+                    List<String> mobile = Arrays.asList(split);
+                    mobile.forEach(m -> {
+                        if (!StringUtils.isEmpty(m)) {
+                            sb.append("@").append(m);
+                        }
+                    });
+                    atMobileText = sb.toString();
+                }
+            } else if (n.getMobile() != null && !n.getMobile().contains(",")) {
+                atMobileText = "@" + n.getMobile();
+            }
 
+            String text = "#### " + n.getTitle() + "\n" +
+                    "> " + n.getContent() + "\n" +
+                    "> ###### " + now + " 提醒\n" +
+                    "> ###### " + atMobileText + "\n";
+            Boolean isAtAll = n.getIsAtAll() > 0;
+            try {
+                OapiRobotSendResponse oapiRobotSendResponse = dingTalk.sendMarkdown( n.getTitle(), text, mobileList, isAtAll);
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
             n.setStatus(0);
             remindMapper.updateByPrimaryKey(n);
         });

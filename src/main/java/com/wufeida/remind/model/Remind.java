@@ -21,6 +21,8 @@ public class Remind {
 
     private String mobile;
 
+    private Integer isAtAll;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class Remind {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Integer getIsAtAll() {
+        return isAtAll;
+    }
+
+    public void setIsAtAll(Integer isAtAll) {
+        this.isAtAll = isAtAll;
     }
 }

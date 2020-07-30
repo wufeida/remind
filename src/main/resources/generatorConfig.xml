@@ -36,6 +36,7 @@
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" type=""/>
             <columnOverride column="status" javaType="java.lang.Integer"/>
             <columnOverride column="type" javaType="java.lang.Integer"/>
+            <columnOverride column="is_at_all" javaType="java.lang.Integer"/>
         </table>
 
     </context>

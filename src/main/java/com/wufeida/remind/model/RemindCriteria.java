@@ -664,6 +664,66 @@ public class RemindCriteria {
             addCriterion("mobile not between", value1, value2, "mobile");
             return (Criteria) this;
         }
+
+        public Criteria andIsAtAllIsNull() {
+            addCriterion("is_at_all is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllIsNotNull() {
+            addCriterion("is_at_all is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllEqualTo(Integer value) {
+            addCriterion("is_at_all =", value, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllNotEqualTo(Integer value) {
+            addCriterion("is_at_all <>", value, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllGreaterThan(Integer value) {
+            addCriterion("is_at_all >", value, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_at_all >=", value, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllLessThan(Integer value) {
+            addCriterion("is_at_all <", value, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllLessThanOrEqualTo(Integer value) {
+            addCriterion("is_at_all <=", value, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllIn(List<Integer> values) {
+            addCriterion("is_at_all in", values, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllNotIn(List<Integer> values) {
+            addCriterion("is_at_all not in", values, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllBetween(Integer value1, Integer value2) {
+            addCriterion("is_at_all between", value1, value2, "isAtAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAtAllNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_at_all not between", value1, value2, "isAtAll");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

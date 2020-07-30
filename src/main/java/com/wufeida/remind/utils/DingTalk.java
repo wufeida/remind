@@ -31,6 +31,7 @@ public class DingTalk {
         return client.execute(request);
     }
 
+    // 不支持at人
     public OapiRobotSendResponse sendLink(String url, String title, String text, String picUrl, List<String> mobiles, Boolean isAtAll) throws ApiException {
         DingTalkClient client = new DefaultDingTalkClient(dingConf.dingUrl);
         OapiRobotSendRequest request = new OapiRobotSendRequest();
@@ -50,6 +51,16 @@ public class DingTalk {
         return client.execute(request);
     }
 
+    /**
+     *
+     * @param title
+     * @param text
+     * @param mobiles
+     * @param isAtAll
+     * @return
+     * @throws ApiException
+     * 注意：markdown @人需要在text拼接上@{手机号} 并且还要在OapiRobotSendRequest.At设置List<mobile>
+     */
     public OapiRobotSendResponse sendMarkdown(String title, String text, List<String> mobiles, Boolean isAtAll) throws ApiException {
         DingTalkClient client = new DefaultDingTalkClient(dingConf.dingUrl);
         OapiRobotSendRequest request = new OapiRobotSendRequest();

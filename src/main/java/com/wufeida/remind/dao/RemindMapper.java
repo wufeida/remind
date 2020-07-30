@@ -35,13 +35,13 @@ public interface RemindMapper {
         "insert into remind (remind_time, create_at, ",
         "update_at, user_id, ",
         "status, type, title, ",
-        "mobile, content, ",
-        "pic_url)",
+        "mobile, is_at_all, ",
+        "content, pic_url)",
         "values (#{remindTime,jdbcType=TIMESTAMP}, #{createAt,jdbcType=TIMESTAMP}, ",
         "#{updateAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, ",
         "#{status,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{title,jdbcType=VARCHAR}, ",
-        "#{mobile,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, ",
-        "#{picUrl,jdbcType=LONGVARCHAR})"
+        "#{mobile,jdbcType=VARCHAR}, #{isAtAll,jdbcType=TINYINT}, ",
+        "#{content,jdbcType=LONGVARCHAR}, #{picUrl,jdbcType=LONGVARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(RemindWithBLOBs record);
@@ -61,6 +61,7 @@ public interface RemindMapper {
         @Result(column="type", property="type", jdbcType=JdbcType.TINYINT),
         @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
         @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
+        @Result(column="is_at_all", property="isAtAll", jdbcType=JdbcType.TINYINT),
         @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="pic_url", property="picUrl", jdbcType=JdbcType.LONGVARCHAR)
     })
@@ -76,14 +77,15 @@ public interface RemindMapper {
         @Result(column="status", property="status", jdbcType=JdbcType.TINYINT),
         @Result(column="type", property="type", jdbcType=JdbcType.TINYINT),
         @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
-        @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR)
+        @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
+        @Result(column="is_at_all", property="isAtAll", jdbcType=JdbcType.TINYINT)
     })
     List<Remind> selectByExample(RemindCriteria example);
 
     @Select({
         "select",
         "id, remind_time, create_at, update_at, user_id, status, type, title, mobile, ",
-        "content, pic_url",
+        "is_at_all, content, pic_url",
         "from remind",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -97,6 +99,7 @@ public interface RemindMapper {
         @Result(column="type", property="type", jdbcType=JdbcType.TINYINT),
         @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
         @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
+        @Result(column="is_at_all", property="isAtAll", jdbcType=JdbcType.TINYINT),
         @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="pic_url", property="picUrl", jdbcType=JdbcType.LONGVARCHAR)
     })
@@ -124,6 +127,7 @@ public interface RemindMapper {
           "type = #{type,jdbcType=TINYINT},",
           "title = #{title,jdbcType=VARCHAR},",
           "mobile = #{mobile,jdbcType=VARCHAR},",
+          "is_at_all = #{isAtAll,jdbcType=TINYINT},",
           "content = #{content,jdbcType=LONGVARCHAR},",
           "pic_url = #{picUrl,jdbcType=LONGVARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
@@ -139,7 +143,8 @@ public interface RemindMapper {
           "status = #{status,jdbcType=TINYINT},",
           "type = #{type,jdbcType=TINYINT},",
           "title = #{title,jdbcType=VARCHAR},",
-          "mobile = #{mobile,jdbcType=VARCHAR}",
+          "mobile = #{mobile,jdbcType=VARCHAR},",
+          "is_at_all = #{isAtAll,jdbcType=TINYINT}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Remind record);
