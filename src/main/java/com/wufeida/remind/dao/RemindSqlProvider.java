@@ -1,9 +1,9 @@
 package com.wufeida.remind.dao;
 
+import com.wufeida.remind.model.Remind;
 import com.wufeida.remind.model.RemindCriteria.Criteria;
 import com.wufeida.remind.model.RemindCriteria.Criterion;
 import com.wufeida.remind.model.RemindCriteria;
-import com.wufeida.remind.model.RemindWithBLOBs;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
@@ -24,7 +24,7 @@ public class RemindSqlProvider {
         return sql.toString();
     }
 
-    public String insertSelective(RemindWithBLOBs record) {
+    public String insertSelective(Remind record) {
         SQL sql = new SQL();
         sql.INSERT_INTO("remind");
         
@@ -32,24 +32,16 @@ public class RemindSqlProvider {
             sql.VALUES("remind_time", "#{remindTime,jdbcType=TIMESTAMP}");
         }
         
-        if (record.getCreateAt() != null) {
-            sql.VALUES("create_at", "#{createAt,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getUpdateAt() != null) {
-            sql.VALUES("update_at", "#{updateAt,jdbcType=TIMESTAMP}");
-        }
-        
         if (record.getUserId() != null) {
-            sql.VALUES("user_id", "#{userId,jdbcType=INTEGER}");
+            sql.VALUES("user_id", "#{userId,jdbcType=BIGINT}");
         }
         
         if (record.getStatus() != null) {
-            sql.VALUES("status", "#{status,jdbcType=TINYINT}");
+            sql.VALUES("status", "#{status,jdbcType=SMALLINT}");
         }
         
-        if (record.getType() != null) {
-            sql.VALUES("type", "#{type,jdbcType=TINYINT}");
+        if (record.getMsgType() != null) {
+            sql.VALUES("msg_type", "#{msgType,jdbcType=SMALLINT}");
         }
         
         if (record.getTitle() != null) {
@@ -61,15 +53,35 @@ public class RemindSqlProvider {
         }
         
         if (record.getIsAtAll() != null) {
-            sql.VALUES("is_at_all", "#{isAtAll,jdbcType=TINYINT}");
+            sql.VALUES("is_at_all", "#{isAtAll,jdbcType=SMALLINT}");
+        }
+        
+        if (record.getPicUrl() != null) {
+            sql.VALUES("pic_url", "#{picUrl,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCreateAt() != null) {
+            sql.VALUES("create_at", "#{createAt,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getUpdateAt() != null) {
+            sql.VALUES("update_at", "#{updateAt,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getTimeUnit() != null) {
+            sql.VALUES("time_unit", "#{timeUnit,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIntervalTime() != null) {
+            sql.VALUES("interval_time", "#{intervalTime,jdbcType=INTEGER}");
+        }
+        
+        if (record.getNotifyType() != null) {
+            sql.VALUES("notify_type", "#{notifyType,jdbcType=SMALLINT}");
         }
         
         if (record.getContent() != null) {
             sql.VALUES("content", "#{content,jdbcType=LONGVARCHAR}");
-        }
-        
-        if (record.getPicUrl() != null) {
-            sql.VALUES("pic_url", "#{picUrl,jdbcType=LONGVARCHAR}");
         }
         
         return sql.toString();
@@ -83,16 +95,19 @@ public class RemindSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("remind_time");
-        sql.SELECT("create_at");
-        sql.SELECT("update_at");
         sql.SELECT("user_id");
         sql.SELECT("status");
-        sql.SELECT("type");
+        sql.SELECT("msg_type");
         sql.SELECT("title");
         sql.SELECT("mobile");
         sql.SELECT("is_at_all");
-        sql.SELECT("content");
         sql.SELECT("pic_url");
+        sql.SELECT("create_at");
+        sql.SELECT("update_at");
+        sql.SELECT("time_unit");
+        sql.SELECT("interval_time");
+        sql.SELECT("notify_type");
+        sql.SELECT("content");
         sql.FROM("remind");
         applyWhere(sql, example, false);
         
@@ -111,14 +126,18 @@ public class RemindSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("remind_time");
-        sql.SELECT("create_at");
-        sql.SELECT("update_at");
         sql.SELECT("user_id");
         sql.SELECT("status");
-        sql.SELECT("type");
+        sql.SELECT("msg_type");
         sql.SELECT("title");
         sql.SELECT("mobile");
         sql.SELECT("is_at_all");
+        sql.SELECT("pic_url");
+        sql.SELECT("create_at");
+        sql.SELECT("update_at");
+        sql.SELECT("time_unit");
+        sql.SELECT("interval_time");
+        sql.SELECT("notify_type");
         sql.FROM("remind");
         applyWhere(sql, example, false);
         
@@ -130,38 +149,30 @@ public class RemindSqlProvider {
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        RemindWithBLOBs record = (RemindWithBLOBs) parameter.get("record");
+        Remind record = (Remind) parameter.get("record");
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         
         SQL sql = new SQL();
         sql.UPDATE("remind");
         
         if (record.getId() != null) {
-            sql.SET("id = #{record.id,jdbcType=INTEGER}");
+            sql.SET("id = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getRemindTime() != null) {
             sql.SET("remind_time = #{record.remindTime,jdbcType=TIMESTAMP}");
         }
         
-        if (record.getCreateAt() != null) {
-            sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getUpdateAt() != null) {
-            sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
-        }
-        
         if (record.getUserId() != null) {
-            sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+            sql.SET("user_id = #{record.userId,jdbcType=BIGINT}");
         }
         
         if (record.getStatus() != null) {
-            sql.SET("status = #{record.status,jdbcType=TINYINT}");
+            sql.SET("status = #{record.status,jdbcType=SMALLINT}");
         }
         
-        if (record.getType() != null) {
-            sql.SET("type = #{record.type,jdbcType=TINYINT}");
+        if (record.getMsgType() != null) {
+            sql.SET("msg_type = #{record.msgType,jdbcType=SMALLINT}");
         }
         
         if (record.getTitle() != null) {
@@ -173,15 +184,35 @@ public class RemindSqlProvider {
         }
         
         if (record.getIsAtAll() != null) {
-            sql.SET("is_at_all = #{record.isAtAll,jdbcType=TINYINT}");
+            sql.SET("is_at_all = #{record.isAtAll,jdbcType=SMALLINT}");
+        }
+        
+        if (record.getPicUrl() != null) {
+            sql.SET("pic_url = #{record.picUrl,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCreateAt() != null) {
+            sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getUpdateAt() != null) {
+            sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getTimeUnit() != null) {
+            sql.SET("time_unit = #{record.timeUnit,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIntervalTime() != null) {
+            sql.SET("interval_time = #{record.intervalTime,jdbcType=INTEGER}");
+        }
+        
+        if (record.getNotifyType() != null) {
+            sql.SET("notify_type = #{record.notifyType,jdbcType=SMALLINT}");
         }
         
         if (record.getContent() != null) {
             sql.SET("content = #{record.content,jdbcType=LONGVARCHAR}");
-        }
-        
-        if (record.getPicUrl() != null) {
-            sql.SET("pic_url = #{record.picUrl,jdbcType=LONGVARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -192,18 +223,21 @@ public class RemindSqlProvider {
         SQL sql = new SQL();
         sql.UPDATE("remind");
         
-        sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        sql.SET("id = #{record.id,jdbcType=BIGINT}");
         sql.SET("remind_time = #{record.remindTime,jdbcType=TIMESTAMP}");
-        sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
-        sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
-        sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
-        sql.SET("status = #{record.status,jdbcType=TINYINT}");
-        sql.SET("type = #{record.type,jdbcType=TINYINT}");
+        sql.SET("user_id = #{record.userId,jdbcType=BIGINT}");
+        sql.SET("status = #{record.status,jdbcType=SMALLINT}");
+        sql.SET("msg_type = #{record.msgType,jdbcType=SMALLINT}");
         sql.SET("title = #{record.title,jdbcType=VARCHAR}");
         sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
-        sql.SET("is_at_all = #{record.isAtAll,jdbcType=TINYINT}");
+        sql.SET("is_at_all = #{record.isAtAll,jdbcType=SMALLINT}");
+        sql.SET("pic_url = #{record.picUrl,jdbcType=VARCHAR}");
+        sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
+        sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
+        sql.SET("time_unit = #{record.timeUnit,jdbcType=VARCHAR}");
+        sql.SET("interval_time = #{record.intervalTime,jdbcType=INTEGER}");
+        sql.SET("notify_type = #{record.notifyType,jdbcType=SMALLINT}");
         sql.SET("content = #{record.content,jdbcType=LONGVARCHAR}");
-        sql.SET("pic_url = #{record.picUrl,jdbcType=LONGVARCHAR}");
         
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         applyWhere(sql, example, true);
@@ -214,23 +248,27 @@ public class RemindSqlProvider {
         SQL sql = new SQL();
         sql.UPDATE("remind");
         
-        sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        sql.SET("id = #{record.id,jdbcType=BIGINT}");
         sql.SET("remind_time = #{record.remindTime,jdbcType=TIMESTAMP}");
-        sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
-        sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
-        sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
-        sql.SET("status = #{record.status,jdbcType=TINYINT}");
-        sql.SET("type = #{record.type,jdbcType=TINYINT}");
+        sql.SET("user_id = #{record.userId,jdbcType=BIGINT}");
+        sql.SET("status = #{record.status,jdbcType=SMALLINT}");
+        sql.SET("msg_type = #{record.msgType,jdbcType=SMALLINT}");
         sql.SET("title = #{record.title,jdbcType=VARCHAR}");
         sql.SET("mobile = #{record.mobile,jdbcType=VARCHAR}");
-        sql.SET("is_at_all = #{record.isAtAll,jdbcType=TINYINT}");
+        sql.SET("is_at_all = #{record.isAtAll,jdbcType=SMALLINT}");
+        sql.SET("pic_url = #{record.picUrl,jdbcType=VARCHAR}");
+        sql.SET("create_at = #{record.createAt,jdbcType=TIMESTAMP}");
+        sql.SET("update_at = #{record.updateAt,jdbcType=TIMESTAMP}");
+        sql.SET("time_unit = #{record.timeUnit,jdbcType=VARCHAR}");
+        sql.SET("interval_time = #{record.intervalTime,jdbcType=INTEGER}");
+        sql.SET("notify_type = #{record.notifyType,jdbcType=SMALLINT}");
         
         RemindCriteria example = (RemindCriteria) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(RemindWithBLOBs record) {
+    public String updateByPrimaryKeySelective(Remind record) {
         SQL sql = new SQL();
         sql.UPDATE("remind");
         
@@ -238,24 +276,16 @@ public class RemindSqlProvider {
             sql.SET("remind_time = #{remindTime,jdbcType=TIMESTAMP}");
         }
         
-        if (record.getCreateAt() != null) {
-            sql.SET("create_at = #{createAt,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getUpdateAt() != null) {
-            sql.SET("update_at = #{updateAt,jdbcType=TIMESTAMP}");
-        }
-        
         if (record.getUserId() != null) {
-            sql.SET("user_id = #{userId,jdbcType=INTEGER}");
+            sql.SET("user_id = #{userId,jdbcType=BIGINT}");
         }
         
         if (record.getStatus() != null) {
-            sql.SET("status = #{status,jdbcType=TINYINT}");
+            sql.SET("status = #{status,jdbcType=SMALLINT}");
         }
         
-        if (record.getType() != null) {
-            sql.SET("type = #{type,jdbcType=TINYINT}");
+        if (record.getMsgType() != null) {
+            sql.SET("msg_type = #{msgType,jdbcType=SMALLINT}");
         }
         
         if (record.getTitle() != null) {
@@ -267,18 +297,38 @@ public class RemindSqlProvider {
         }
         
         if (record.getIsAtAll() != null) {
-            sql.SET("is_at_all = #{isAtAll,jdbcType=TINYINT}");
+            sql.SET("is_at_all = #{isAtAll,jdbcType=SMALLINT}");
+        }
+        
+        if (record.getPicUrl() != null) {
+            sql.SET("pic_url = #{picUrl,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCreateAt() != null) {
+            sql.SET("create_at = #{createAt,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getUpdateAt() != null) {
+            sql.SET("update_at = #{updateAt,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getTimeUnit() != null) {
+            sql.SET("time_unit = #{timeUnit,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIntervalTime() != null) {
+            sql.SET("interval_time = #{intervalTime,jdbcType=INTEGER}");
+        }
+        
+        if (record.getNotifyType() != null) {
+            sql.SET("notify_type = #{notifyType,jdbcType=SMALLINT}");
         }
         
         if (record.getContent() != null) {
             sql.SET("content = #{content,jdbcType=LONGVARCHAR}");
         }
         
-        if (record.getPicUrl() != null) {
-            sql.SET("pic_url = #{picUrl,jdbcType=LONGVARCHAR}");
-        }
-        
-        sql.WHERE("id = #{id,jdbcType=INTEGER}");
+        sql.WHERE("id = #{id,jdbcType=BIGINT}");
         
         return sql.toString();
     }

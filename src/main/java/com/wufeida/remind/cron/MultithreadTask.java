@@ -23,7 +23,6 @@ public class MultithreadTask {
     public void first() {
 //        System.out.println("第一个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
 //        System.out.println();
-        System.out.println(111);
         remindService.sendMsg();
     }
 

@@ -3,19 +3,15 @@ package com.wufeida.remind.model;
 import java.util.Date;
 
 public class Remind {
-    private Integer id;
+    private Long id;
 
     private Date remindTime;
 
-    private Date createAt;
-
-    private Date updateAt;
-
-    private Integer userId;
+    private Long userId;
 
     private Integer status;
 
-    private Integer type;
+    private Short msgType;
 
     private String title;
 
@@ -23,11 +19,25 @@ public class Remind {
 
     private Integer isAtAll;
 
-    public Integer getId() {
+    private String picUrl;
+
+    private Date createAt;
+
+    private Date updateAt;
+
+    private String timeUnit;
+
+    private Integer intervalTime;
+
+    private Integer notifyType;
+
+    private String content;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,27 +49,11 @@ public class Remind {
         this.remindTime = remindTime;
     }
 
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
-
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -71,12 +65,12 @@ public class Remind {
         this.status = status;
     }
 
-    public Integer getType() {
-        return type;
+    public Short getMsgType() {
+        return msgType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setMsgType(Short msgType) {
+        this.msgType = msgType;
     }
 
     public String getTitle() {
@@ -101,5 +95,61 @@ public class Remind {
 
     public void setIsAtAll(Integer isAtAll) {
         this.isAtAll = isAtAll;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public String getTimeUnit() {
+        return timeUnit;
+    }
+
+    public void setTimeUnit(String timeUnit) {
+        this.timeUnit = timeUnit;
+    }
+
+    public Integer getIntervalTime() {
+        return intervalTime;
+    }
+
+    public void setIntervalTime(Integer intervalTime) {
+        this.intervalTime = intervalTime;
+    }
+
+    public Integer getNotifyType() {
+        return notifyType;
+    }
+
+    public void setNotifyType(Integer notifyType) {
+        this.notifyType = notifyType;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

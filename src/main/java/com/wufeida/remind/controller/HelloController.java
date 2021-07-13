@@ -52,7 +52,7 @@ public class HelloController {
     @GetMapping("/list")
     public List<Remind> list() throws ApiException {
         RemindCriteria remindCriteria = new RemindCriteria();
-        remindCriteria.createCriteria().andIdEqualTo(1);
+        remindCriteria.createCriteria().andIdEqualTo(1L);
 
         return remindMapper.selectByExample(remindCriteria);
     }

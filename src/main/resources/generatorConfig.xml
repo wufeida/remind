@@ -37,6 +37,8 @@
             <columnOverride column="status" javaType="java.lang.Integer"/>
             <columnOverride column="type" javaType="java.lang.Integer"/>
             <columnOverride column="is_at_all" javaType="java.lang.Integer"/>
+            <columnOverride column="content" javaType="java.lang.String"/>
+            <columnOverride column="notify_type" javaType="java.lang.Integer"/>
         </table>
 
     </context>
